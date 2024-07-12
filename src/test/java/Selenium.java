@@ -1,4 +1,5 @@
 import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -11,7 +12,7 @@ import javax.swing.*;
 import java.time.Duration;
 
 public class Selenium {
-    public static WebDriver driver = new EdgeDriver();
+    public static WebDriver driver = new ChromeDriver();
     public static void main(String[] args) throws InterruptedException {
       /*  OpenBroswer("https://the-internet.herokuapp.com/login");
         OpenBrowserUsingNavigation("https://www.nezamacademy.com");
@@ -22,10 +23,19 @@ public class Selenium {
         Elementhidden();
         System.out.println(Helloworld());
          OpenBrowserUsingNavigation("https://the-internet.herokuapp.com/checkboxes");
-       */ handlingCheckbox();
+        handlingCheckbox();
         OpenBrowserUsingNavigation("https://the-internet.herokuapp.com/context_menu");
         rightClick();
-       QuiteWindows();
+       OpenBrowserUsingNavigation("https://the-internet.herokuapp.com/drag_and_drop");
+                OpenBrowserUsingNavigation("https://the-internet.herokuapp.com/drag_and_drop");
+       implicitWait();
+       // Dropdown();
+        Click_hold();
+         */
+        OpenBrowserUsingNavigation("https://the-internet.herokuapp.com/hovers");
+        implicitWait();
+        hover();
+      // QuiteWindows();
 
     }
     public static WebElement byToWebelement(By locator){
@@ -95,8 +105,11 @@ public class Selenium {
         By hiddenelementLocator = By.partialLinkText("Example 1");
         driver.findElement(hiddenelementLocator).click();
     }
+    public static void implicitWait(){
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+    }
     public static void explicitWait(By locator){
-        new WebDriverWait(driver,Duration.ofSeconds(10))
+        new WebDriverWait(driver,Duration.ofSeconds(5))
                 .until(ExpectedConditions.visibilityOf(byToWebelement(locator)));
     }
     public static void fluentWait(By locator){
@@ -131,6 +144,25 @@ public class Selenium {
     public static void rightClick(){
         By rightclick = By.id("hot-spot");
       new Actions(driver).contextClick(byToWebelement(rightclick)).perform();
+    }
+    public static void Dropdown(){
+        By boxA = By.id("column-a");
+        By boxB = By.id("column-b");
+        new Actions(driver).dragAndDrop(byToWebelement(boxA),byToWebelement(boxB)).perform();
+        new Actions(driver).dragAndDrop(byToWebelement(boxB),byToWebelement(boxA)).perform();
+    }
+    public static void Click_hold(){
+        By boxA = By.id("column-a");
+        By boxB = By.id("column-b");
+        new Actions(driver).clickAndHold(byToWebelement(boxA))
+                .moveToElement(byToWebelement(boxB))
+                .release()
+                .build()
+                .perform();
+    }
+    public static void hover(){
+        By picture = By.xpath("(//img)[3]");
+        new Actions(driver).moveToElement(byToWebelement(picture)).perform();
     }
     public static void CloseWendows(){
         driver.close();
