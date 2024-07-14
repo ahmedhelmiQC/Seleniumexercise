@@ -10,9 +10,14 @@ import org.xml.sax.Locator;
 
 import javax.swing.*;
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
 
 public class Selenium {
     public static WebDriver driver = new ChromeDriver();
+    public static String firstTab;
+    public static String secondTab;
     public static void main(String[] args) throws InterruptedException {
       /*  OpenBroswer("https://the-internet.herokuapp.com/login");
         OpenBrowserUsingNavigation("https://www.nezamacademy.com");
@@ -31,10 +36,13 @@ public class Selenium {
        implicitWait();
        // Dropdown();
         Click_hold();
-         */
+         hover();
         OpenBrowserUsingNavigation("https://the-internet.herokuapp.com/hovers");
+        */
+
+        OpenBrowserUsingNavigation("https://the-internet.herokuapp.com/windows");
         implicitWait();
-        hover();
+
       // QuiteWindows();
 
     }
@@ -164,6 +172,7 @@ public class Selenium {
         By picture = By.xpath("(//img)[3]");
         new Actions(driver).moveToElement(byToWebelement(picture)).perform();
     }
+
     public static void CloseWendows(){
         driver.close();
     }
