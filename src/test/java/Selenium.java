@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Set;
 
 public class Selenium {
-    public static WebDriver driver = new ChromeDriver();
+    public static WebDriver driver = new EdgeDriver();
     public static String firstTab;
     public static String secondTab;
     public static void main(String[] args) throws InterruptedException {
@@ -29,20 +29,17 @@ public class Selenium {
         System.out.println(Helloworld());
          OpenBrowserUsingNavigation("https://the-internet.herokuapp.com/checkboxes");
         handlingCheckbox();
-        OpenBrowserUsingNavigation("https://the-internet.herokuapp.com/context_menu");
-        rightClick();
-       OpenBrowserUsingNavigation("https://the-internet.herokuapp.com/drag_and_drop");
-                OpenBrowserUsingNavigation("https://the-internet.herokuapp.com/drag_and_drop");
-       implicitWait();
-       // Dropdown();
-        Click_hold();
-         hover();
-        OpenBrowserUsingNavigation("https://the-internet.herokuapp.com/hovers");
+
         */
 
-        OpenBrowserUsingNavigation("https://the-internet.herokuapp.com/windows");
+       // OpenBrowserUsingNavigation("https://the-internet.herokuapp.com/nested_frames");
         implicitWait();
-
+       // Ifram();
+       // Nestedfram();
+        OpenBrowserUsingNavigation("https://the-internet.herokuapp.com/javascript_alerts");
+        //promptAlert();
+       acceptAlert();
+       // dismissAlert();
       // QuiteWindows();
 
     }
@@ -135,42 +132,46 @@ public class Selenium {
         fluentWait(gettextlocator);
         return  driver.findElement(gettextlocator).getText();
         }
-
-    public static void handlingDropdown(){
-        By dropdown = By.cssSelector("select#dropdown");
-        String text = new Select(byToWebelement(dropdown)).getFirstSelectedOption().getText();
-        System.out.println(text);
-        int size = new Select(byToWebelement(dropdown)).getOptions().size();
-        System.out.println(size);
-
-    }
     public static void handlingCheckbox(){
         By checkbox = By.cssSelector("input[type='checkbox']:nth-of-type(2)");
         driver.findElement(checkbox).click();
-        new Actions(driver).doubleClick(byToWebelement(checkbox)).perform();
+        new org.openqa.selenium.interactions.Actions(driver).doubleClick(byToWebelement(checkbox)).perform();
     }
-    public static void rightClick(){
-        By rightclick = By.id("hot-spot");
-      new Actions(driver).contextClick(byToWebelement(rightclick)).perform();
+    public static void Ifram(){
+        By textArea = By.cssSelector("body#tinymce");
+        driver.switchTo().frame("mce_0_ifr");
+        driver.findElement(textArea).clear();
+        driver.findElement(textArea).sendKeys("ahmed");
+        driver.switchTo().parentFrame();
     }
-    public static void Dropdown(){
-        By boxA = By.id("column-a");
-        By boxB = By.id("column-b");
-        new Actions(driver).dragAndDrop(byToWebelement(boxA),byToWebelement(boxB)).perform();
-        new Actions(driver).dragAndDrop(byToWebelement(boxB),byToWebelement(boxA)).perform();
+    public static void Nestedfram(){
+        driver.switchTo().frame("frame-top");
+        driver.switchTo().frame("frame-left");
+        System.out.println(driver.findElement(By.tagName("body")).getText());
+        driver.switchTo().parentFrame();
+        driver.switchTo().frame("frame-middle");
+        System.out.println(driver.findElement(By.tagName("body")).getText());
+        driver.switchTo().defaultContent();
+        driver.switchTo().frame("frame-bottom");
+        System.out.println(driver.findElement(By.tagName("body")).getText());
+
+
     }
-    public static void Click_hold(){
-        By boxA = By.id("column-a");
-        By boxB = By.id("column-b");
-        new Actions(driver).clickAndHold(byToWebelement(boxA))
-                .moveToElement(byToWebelement(boxB))
-                .release()
-                .build()
-                .perform();
+    public static void acceptAlert(){
+        driver.findElement(By.cssSelector("[onclick='jsAlert()']")).click();
+        Alert alert = driver.switchTo().alert();
+        System.out.println(alert.getText());
+        alert.accept();
     }
-    public static void hover(){
-        By picture = By.xpath("(//img)[3]");
-        new Actions(driver).moveToElement(byToWebelement(picture)).perform();
+    public static void dismissAlert(){
+        driver.findElement(By.cssSelector("[onclick='jsConfirm()']")).click();
+        driver.switchTo().alert().dismiss();
+    }
+    public static void promptAlert(){
+        driver.findElement(By.cssSelector("[onclick='jsPrompt()']")).click();
+       Alert alert = driver.switchTo().alert();
+       alert.sendKeys("ahmed");
+        alert.accept();
     }
 
     public static void CloseWendows(){
