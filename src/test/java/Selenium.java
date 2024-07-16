@@ -30,17 +30,23 @@ public class Selenium {
          OpenBrowserUsingNavigation("https://the-internet.herokuapp.com/checkboxes");
         handlingCheckbox();
 
-        */
-
-       // OpenBrowserUsingNavigation("https://the-internet.herokuapp.com/nested_frames");
+        OpenBrowserUsingNavigation("https://the-internet.herokuapp.com/nested_frames");
         implicitWait();
-       // Ifram();
-       // Nestedfram();
+        Ifram();
+       Nestedfram();
         OpenBrowserUsingNavigation("https://the-internet.herokuapp.com/javascript_alerts");
-        //promptAlert();
+        promptAlert();
        acceptAlert();
-       // dismissAlert();
-      // QuiteWindows();
+        dismissAlert();
+        OpenBrowserUsingNavigation("https://the-internet.herokuapp.com/key_presses");
+       KeyUsingSendKeys();
+        KeyUisingAction();
+        UpperKeys();
+        */
+        OpenBrowserUsingNavigation("https://the-internet.herokuapp.com/key_presses");
+        implicitWait();
+
+      //QuiteWindows();
 
     }
     public static WebElement byToWebelement(By locator){
@@ -172,6 +178,35 @@ public class Selenium {
        Alert alert = driver.switchTo().alert();
        alert.sendKeys("ahmed");
         alert.accept();
+    }
+    public static void KeyUsingSendKeys(){
+        driver.findElement(By.id("target")).sendKeys(Keys.ARROW_DOWN);
+        //driver.findElement(By.id("target")).sendKeys(Keys.ARROW_RIGHT);
+    }
+    public static void KeyUisingAction(){
+        //new Actions(driver).keyDown(Keys.SHIFT).perform();
+        new Actions(driver).keyDown(Keys.SHIFT)
+                .keyDown(Keys.ALT)
+                .keyUp(Keys.ALT)
+                .keyUp(Keys.SHIFT).perform();
+    }
+    public static void UpperKeys(){
+        By text = By.id("target");
+        new Actions(driver).keyDown(byToWebelement(text),Keys.SHIFT)
+                .sendKeys(byToWebelement(text), "ahmed")
+                .keyUp(Keys.SHIFT)
+                .build()
+                .perform();
+    }
+    public static void scollingUsinJS(){
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();",byToWebelement(By.id("")) );
+        new WebDriverWait(driver,Duration.ofSeconds(5))
+            .until(ExpectedConditions.not(ExpectedConditions.attributeToBeNotEmpty(byToWebelement(By.id("")),"disabled")));
+        driver.findElement(By.id("")).sendKeys("test");
+    }
+    public static void scrollingUsingAction(){
+        new Actions(driver).scrollToElement(byToWebelement(By.id(""))).perform();
+        driver.findElement(By.id("")).sendKeys("test");
     }
 
     public static void CloseWendows(){
