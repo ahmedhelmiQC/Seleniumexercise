@@ -10,6 +10,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.xml.sax.Locator;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
@@ -18,10 +21,10 @@ import java.util.HashMap;
 import java.util.Set;
 
 public class Selenium {
-    public static WebDriver driver = new EdgeDriver();
+    public static WebDriver driver = new ChromeDriver();
     public static String firstTab;
     public static String secondTab;
-    public static void main(String[] args) throws InterruptedException, IOException {
+    public static void main(String[] args) {
       /*  OpenBroswer("https://the-internet.herokuapp.com/login");
         OpenBrowserUsingNavigation("https://www.nezamacademy.com");
         ClickOnBack();
@@ -45,11 +48,9 @@ public class Selenium {
        KeyUsingSendKeys();
         KeyUisingAction();
         UpperKeys();
-        */
         OpenBrowserUsingNavigation("https://the-internet.herokuapp.com/forgot_password");
-        implicitWait();
-        takingScreenshot("screenbutton2");
-      //QuiteWindows();
+     takingScreenshot("screenbutton2");
+        */
 
     }
     public static WebElement byToWebelement(By locator){
@@ -216,7 +217,7 @@ public class Selenium {
         //File src = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
         File src = (byToWebelement(By.cssSelector("button[class='radius']"))).getScreenshotAs(OutputType.FILE);
         File target = new File(path+imagename+".png");
-        FileUtils.copyFile(src,target);
+        FileUtils.copyFile(src,target);        // commons-io <dependency>
 
     }
 
