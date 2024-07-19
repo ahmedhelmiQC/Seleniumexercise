@@ -14,7 +14,6 @@ public class Screenshot {
 
     public static void main(String[] args) throws IOException {
         //initalizeDriver();
-        headlessDriver();
 
         OpenBrowserUsingNavigation("https://the-internet.herokuapp.com/forgot_password");
         takingScreenshot("screenbutton4");
@@ -27,12 +26,6 @@ public class Screenshot {
         edgeOptions.addArguments("--guest");
         driver = new EdgeDriver(edgeOptions);
     }
-    public static void headlessDriver() // Run in headless mode, i.e., without a UI
-    {
-        EdgeOptions edgeOptions = new EdgeOptions();
-        edgeOptions.addArguments("--headless");
-        driver = new EdgeDriver(edgeOptions);
-    }
 
     public static void OpenBrowserUsingNavigation(String URL) {
         driver.navigate().to(URL);
@@ -41,6 +34,7 @@ public class Screenshot {
     public static WebElement byToWebelement(By locator) {
         return driver.findElement(locator);
     }
+
 
     public static void takingScreenshot(String imagename) throws IOException {
         String path = "E:\\Nezam\\Seleniumexercise\\src\\main\\resources\\";
